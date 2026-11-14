@@ -13,7 +13,7 @@ export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
     clicked.current = true;
     setShimmering(true);
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    timer.current = setTimeout(onOpen, reducedMotion ? 0 : 1050);
+    timer.current = setTimeout(onOpen, reducedMotion ? 0 : 1750);
   }
 
   return <section id="home" className={`cover entrance ${shimmering ? 'is-shimmering' : ''} ${opened ? 'is-revealed' : ''}`} aria-label="دعوة زفاف عمر ومريم">

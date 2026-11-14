@@ -20,8 +20,8 @@
 .ring-light{position:absolute;inset:13%;z-index:1;border-radius:50%;background:radial-gradient(ellipse,#fff5d6 0,#f7d49570 20%,#e8a75730 45%,transparent 72%);filter:blur(12px);opacity:0;pointer-events:none}
 .diamond-flare{position:absolute;z-index:3;top:49%;left:46%;width:42px;height:42px;display:grid;place-items:center;color:#fff4d3;text-shadow:0 0 8px #fff,0 0 22px #ffd37f;font-size:39px;line-height:1;opacity:0;pointer-events:none;transform:scale(.3)}
 .flare-small{top:52%;left:53%;width:25px;height:25px;font-size:23px}
-.entrance.is-shimmering .ring-light{animation:ringBloom 1.6s ease-out both}
-.entrance.is-shimmering .diamond-flare{animation:diamondShimmer 1.4s ease-out both}
+.entrance.is-shimmering .ring-light{animation:ringBloom 2.8s ease-out both}
+.entrance.is-shimmering .diamond-flare{animation:diamondShimmer 2.4s ease-out both}
 .entrance.is-shimmering .flare-small{animation-delay:.18s}
 .entrance.is-shimmering .real-ring-box{filter:drop-shadow(0 0 20px #f4d18c80)}
 .entrance .open-hint{position:relative;margin:12px 0 20px;padding:0;min-height:22px;z-index:5;flex-shrink:0}
@@ -30,7 +30,9 @@
 .entrance-discover{display:flex;justify-content:center;align-items:center;gap:8px;position:relative;z-index:5;color:#edcea5;font-size:12px;margin:-5px 0 18px;animation:detailsAppear .7s both}
 .invitation-details{outline:none;scroll-margin-top:22px;padding-top:8px;position:relative}
 .invitation-details[hidden]{display:none!important}
-.details-visible .invitation-details{animation:detailsAppear .95s cubic-bezier(.2,.65,.2,1) both}
+.details-visible .invitation-details{animation:none}
+.details-visible .invitation-details>*{opacity:0;transform:translateY(28px);filter:blur(3px);transition:opacity 1.65s ease,transform 1.65s cubic-bezier(.2,.65,.2,1),filter 1.65s ease}
+.details-visible .invitation-details>[data-revealed="true"]{opacity:1;transform:none;filter:none}
 .invitation-details>.verse-card{margin-top:22px}
 @keyframes ringBloom{0%{opacity:0;transform:scale(.6)}35%{opacity:.9}70%{opacity:.45}100%{opacity:.15;transform:scale(1.55)}}
 @keyframes diamondShimmer{0%{opacity:0;transform:scale(.2) rotate(-40deg)}30%{opacity:1;transform:scale(1.25) rotate(0)}65%{opacity:.8}100%{opacity:0;transform:scale(.4) rotate(45deg)}}
@@ -38,3 +40,17 @@
 @media(max-width:420px){.seamless-invitation .entrance{padding:24px 22px 20px}.entrance .cover-copy{margin-top:25px}.entrance .cover-copy h1{font-size:57px}.entrance-invite{font-size:17px}.entrance .ring-display{width:270px;height:305px;margin-top:9px}.entrance .ring-image-button{width:245px;height:245px}.ring-display .marble-pedestal{width:150px;height:110px}.entrance .open-hint{margin:9px 0 17px}.entrance .open-hint p{font-size:12px}}
 @media(max-height:720px) and (min-width:421px){.entrance .cover-copy{margin-top:16px}.entrance .cover-copy h1{font-size:54px}.entrance .ring-display{height:290px}.entrance .ring-image-button{width:240px;height:240px}.ring-display .marble-pedestal{height:100px}}
 @media(prefers-reduced-motion:reduce){.entrance.is-shimmering .ring-light,.entrance.is-shimmering .diamond-flare,.details-visible .invitation-details,.entrance-discover{animation:none}.ring-image-button .real-ring-box{transition:none}}
+@media(prefers-reduced-motion:reduce){.details-visible .invitation-details>*{transition:none;opacity:1;transform:none;filter:none}}
+/* Photographic stage and plinth. Keep the real image and its button aligned. */
+.seamless-invitation .entrance{--box-size:270px;min-height:max(100svh,800px);background:#2a0c17 url('/assets/curtain-stage-real.png') center / 100% 100% no-repeat}
+.entrance>.theater-scene{background:none}
+.entrance .stage-curtain,.entrance .stage-floor,.entrance .rose-garden,.entrance .stage-spotlight{display:none}
+.entrance .cover-copy{position:absolute;inset:9% 22px auto;margin:0}
+.entrance .cover-copy h1{background:linear-gradient(115deg,#cba35e,#ffe6a1 45%,#bb8745 75%,#f5d79c);background-clip:text;-webkit-background-clip:text;color:transparent;text-shadow:none}
+.entrance .ring-display{position:absolute;top:calc(61% - var(--box-size) * .95);left:50%;transform:translateX(-50%);margin:0;width:var(--box-size);height:var(--box-size)}
+.ring-display .marble-pedestal{display:none}
+.entrance .ring-image-button{inset:0;width:100%;height:100%;transform:none}
+.entrance .open-hint{position:absolute;top:73%;left:20px;right:20px;justify-content:center;margin:0;padding:0;color:#603d44;text-shadow:0 1px 3px #fff9}
+.entrance .entrance-discover{position:absolute;top:80%;left:50%;transform:translateX(-50%);white-space:nowrap;margin:0;animation:none}
+.entrance .cover-footer{position:absolute;bottom:3.5%;left:24px;right:24px;width:auto;margin:0;padding:0;color:#f4dbc5}
+@media(max-width:420px){.seamless-invitation .entrance{--box-size:245px;min-height:max(100svh,780px)}.entrance .cover-copy{top:9%}.entrance .ring-display{height:var(--box-size);width:var(--box-size);margin:0}.entrance .ring-image-button{height:100%;width:100%}.entrance .open-hint{margin:0}}

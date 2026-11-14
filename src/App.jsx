@@ -75,13 +75,38 @@ export default function App() {
   }
   useEffect(() => {
     if (!opened) return;
-    // Reveal details beneath the same stage, then gently bring the first card into view.
-    const timer = setTimeout(() => {
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      details.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
-      details.current?.focus({ preventScroll: true });
-    }, 400);
-    return () => clearTimeout(timer);
+    const cards = Array.from(details.current.children);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timers = new Set();
+    const show = card => {
+      card.dataset.revealed = 'true';
+      card.inert = false;
+    };
+    if (reducedMotion || !('IntersectionObserver' in window)) {
+      cards.forEach(show);
+      return;
+    }
+    cards.forEach(card => { card.inert = true; });
+    const observer = new IntersectionObserver(entries => {
+      let stagger = 0;
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const timer = setTimeout(() => {
+          show(entry.target);
+          timers.delete(timer);
+        }, 180 + stagger++ * 260);
+        timers.add(timer);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -28px 0px' });
+    cards.forEach(card => observer.observe(card));
+    // Reveal the first card softly below the stage; never move the visitor's scroll.
+    const first = setTimeout(() => show(cards[0]), 350);
+    timers.add(first);
+    return () => {
+      observer.disconnect();
+      timers.forEach(clearTimeout);
+    };
   }, [opened]);
   return <main className={`invitation seamless-invitation ${opened ? 'details-visible' : ''}`} style={entranceHeight ? { '--entrance-height': `${entranceHeight}px` } : undefined}>
     <InvitationEntrance opened={opened} onOpen={revealDetails} groom={wedding.groom} bride={wedding.bride} />
