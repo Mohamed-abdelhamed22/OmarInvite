@@ -22,3 +22,18 @@
 @media(max-width:420px){.seamless-invitation .royal-entrance{min-height:max(100svh,820px)}.royal-title{top:21%;left:23px;right:23px}.royal-bismillah{font-size:26px;margin-bottom:12px}.royal-title h1{font-size:61px}.royal-invite{font-size:19px}.royal-tagline{font-size:15px}.royal-date{margin-top:13px}.royal-action{top:62%}.invitation-details>.verse-card,.invitation-details>.countdown-section,.invitation-details>.details,.invitation-details>.rsvp-section,.royal-name-card{margin-inline:19px;padding-inline:20px}.royal-name-card h2{font-size:59px}}
 @media(prefers-reduced-motion:reduce){.royal-curtains span{transition:none}.royal-dust i{animation:none}.royal-open-button{transition:none}}
 .royal-action{top:auto;bottom:8%}.royal-name-card:before,.royal-name-card:after{display:none}.gold-sprig{position:absolute;width:73px;height:175px;z-index:-1;pointer-events:none}.sprig-top{top:2px;left:-12px;transform:rotate(-12deg)}.sprig-bottom{bottom:2px;right:-12px;transform:rotate(168deg)}
+/* A longer curtain opening with a single shower of golden light. */
+.royal-curtains span{transition-duration:3.8s,3.8s;transition-timing-function:cubic-bezier(.26,.46,.22,1),ease}
+.royal-falling-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:4}
+.royal-falling-stars>span{position:absolute;left:var(--x);top:-5%;width:var(--size);height:var(--size);color:#ffe8a4;opacity:0;filter:drop-shadow(0 0 4px #fff0bf) drop-shadow(0 0 9px #ffca69)}
+.royal-falling-stars svg{display:block;width:100%;height:100%;overflow:visible}
+.is-opening .royal-falling-stars>span{animation:royalStarfall var(--duration) var(--delay) cubic-bezier(.25,.4,.45,1) both}
+@keyframes royalStarfall{0%{opacity:0;transform:translate3d(0,-25px,0) rotate(0) scale(.4)}12%{opacity:.95}44%{opacity:.7}63%{opacity:1}87%{opacity:.75}100%{opacity:0;transform:translate3d(var(--drift),110svh,0) rotate(180deg) scale(.8)}}
+.royal-title{top:20%}
+.royal-bismillah{font-family:'Aref Ruqaa',serif;font-size:31px;line-height:1.75;font-weight:400;margin-bottom:9px;padding-block:2px;color:#f3d5a0}
+.royal-invite{margin-top:8px}
+.royal-title h1{line-height:1.65}
+.royal-date{margin-top:12px}.royal-date strong{font-size:35px}
+.royal-action{top:auto;bottom:14%}
+@media(max-width:420px){.royal-title{top:20%;left:18px;right:18px}.royal-bismillah{font-size:28px;line-height:1.75;margin-bottom:8px}.royal-title h1{font-size:58px;line-height:1.65}.royal-date{margin-top:10px}.royal-action{top:auto;bottom:14%}}
+@media(prefers-reduced-motion:reduce){.royal-curtains span{transition:none}.royal-falling-stars{display:none}}
