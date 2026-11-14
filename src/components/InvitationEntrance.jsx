@@ -13,7 +13,7 @@ export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
     clicked.current = true;
     setShimmering(true);
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    timer.current = setTimeout(onOpen, reducedMotion ? 0 : 1750);
+    timer.current = setTimeout(onOpen, reducedMotion ? 0 : 2900);
   }
 
   return <section id="home" className={`cover entrance ${shimmering ? 'is-shimmering' : ''} ${opened ? 'is-revealed' : ''}`} aria-label="دعوة زفاف عمر ومريم">
@@ -29,8 +29,10 @@ export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
     <div className="ring-display">
       <div className="marble-pedestal" aria-hidden="true"><div className="pedestal-top" /><div className="pedestal-body" /></div>
       <button className="ring-image-button" type="button" onClick={reveal} disabled={shimmering || opened}
-        aria-label="المس علبة الخاتم لإظهار تفاصيل الدعوة" aria-expanded={opened} aria-controls="invitation-details">
-        <img className="real-ring-box" src="/assets/ring-box-real.png" alt="علبة خاتم مخمل نبيتي ببطانة عاجية وخاتم ألماس" width="1024" height="1024" fetchPriority="high" />
+        aria-label="دوس على الخاتم لفتح العلبة وإظهار تفاصيل الدعوة" aria-expanded={opened} aria-controls="invitation-details">
+        <img className="real-ring-box open-ring-box" src="/assets/ring-box-real.png" alt="" aria-hidden="true" width="1280" height="1280" fetchPriority="high" />
+        <img className="closed-ring-box closed-box-base" src="/assets/ring-box-closed.png" alt="" aria-hidden="true" width="1280" height="1280" fetchPriority="high" />
+        <img className="closed-ring-box closed-box-lid" src="/assets/ring-box-closed.png" alt="" aria-hidden="true" width="1280" height="1280" />
         <span className="ring-light" aria-hidden="true" />
         <span className="diamond-flare" aria-hidden="true">✦</span>
         <span className="diamond-flare flare-small" aria-hidden="true">✧</span>
@@ -38,7 +40,7 @@ export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
     </div>
     <div className="open-hint" role="status" aria-live="polite">
       <span className="hint-line" />
-      <p>{opened ? 'أهلًا بكم في حكايتنا' : shimmering ? 'وبكم تكتمل الفرحة…' : 'المس الخاتم لتبدأ الحكاية'}</p>
+      {shimmering || opened ? <p>{opened ? 'أهلًا بكم في حكايتنا' : 'نفتح لكم حكايتنا…'}</p> : <button className="hint-action" type="button" onClick={reveal} aria-controls="invitation-details" aria-expanded={false}>دوس على الخاتم <span aria-hidden="true">✦</span></button>}
       <span className="hint-line" />
     </div>
     {opened && <a href="#invitation-details" className="entrance-discover">تفاصيل فرحتنا <ArrowDown size={16} /></a>}

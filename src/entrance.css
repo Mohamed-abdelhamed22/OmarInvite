@@ -54,3 +54,25 @@
 .entrance .entrance-discover{position:absolute;top:80%;left:50%;transform:translateX(-50%);white-space:nowrap;margin:0;animation:none}
 .entrance .cover-footer{position:absolute;bottom:3.5%;left:24px;right:24px;width:auto;margin:0;padding:0;color:#f4dbc5}
 @media(max-width:420px){.seamless-invitation .entrance{--box-size:245px;min-height:max(100svh,780px)}.entrance .cover-copy{top:9%}.entrance .ring-display{height:var(--box-size);width:var(--box-size);margin:0}.entrance .ring-image-button{height:100%;width:100%}.entrance .open-hint{margin:0}}
+/* Closed velvet box opens first, then the diamond catches the light. */
+.ring-image-button{perspective:700px}
+.entrance:not(.is-shimmering) .ring-image-button{clip-path:inset(42% 9% 1% 14% round 14px)}
+.ring-image-button .open-ring-box{opacity:0;transform:scaleY(.88);transform-origin:50% 94%;transition:opacity 1s .45s ease,transform 1.45s .35s cubic-bezier(.2,.7,.2,1),filter .5s}
+.ring-image-button:not(:disabled):hover .open-ring-box{transform:scaleY(.88)}
+.closed-ring-box{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 7px 9px #190b1455);opacity:1}
+.closed-box-base{z-index:3;clip-path:inset(74% 0 0);transition:opacity .65s .55s}
+.closed-box-lid{z-index:4;clip-path:inset(0 0 26%);transform-origin:52% 74%;transition:transform 1.4s cubic-bezier(.3,.65,.2,1),opacity .7s .55s}
+.is-shimmering .open-ring-box{opacity:1;transform:none}
+.is-shimmering .closed-box-lid{transform:rotateX(-105deg) translateY(-8px);opacity:0}
+.is-shimmering .closed-box-base{opacity:0}
+.entrance.is-shimmering .ring-light{animation-delay:1s}
+.entrance.is-shimmering .diamond-flare{animation-delay:1.15s}
+.entrance.is-shimmering .flare-small{animation-delay:1.35s}
+.entrance .open-hint{top:73%;color:#ffedca;text-shadow:0 1px 2px #210a16}
+.entrance .open-hint p,.hint-action{background:#461628ed;border:1px solid #ddbd81;border-radius:30px;padding:11px 22px;box-shadow:0 4px 16px #230b2044;color:#fff0cc;font-size:15px;font-weight:700;line-height:1.6}
+.hint-action{display:inline-flex;gap:11px;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,box-shadow .25s}
+.hint-action:hover{background:#6b2c40;box-shadow:0 0 18px #d6b07050}
+.hint-action span{color:#f4d488;font-size:17px}
+.entrance .open-hint .hint-line{display:none}
+@media(max-width:420px){.entrance .open-hint p,.hint-action{font-size:14px;padding:10px 20px}}
+@media(prefers-reduced-motion:reduce){.closed-box-lid,.closed-box-base,.ring-image-button .open-ring-box{transition:none}.is-shimmering .closed-ring-box{display:none}.is-shimmering .open-ring-box{opacity:1;transform:none}}
