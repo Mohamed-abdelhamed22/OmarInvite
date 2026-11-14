@@ -29,3 +29,6 @@ dist-ssr
 
 .video-tools/
 .video-reference/
+
+.qa-tools/
+.qa-output/

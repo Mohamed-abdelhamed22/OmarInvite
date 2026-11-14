@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, CalendarDays, Check, Heart, MapPin } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, Check, Heart, MapPin } from 'lucide-react';
 import './App.css';
-import TheaterScene from './components/TheaterScene';
+import InvitationEntrance from './components/InvitationEntrance';
 import './reference-theme.css';
+import './entrance.css';
 
 // Wedding information supplied by the couple.
 const wedding = {
@@ -11,7 +12,6 @@ const wedding = {
   year: 2026, month: 11, day: 2,
   venue: 'قاعة الملكة', address: '', mapsUrl: 'https://maps.app.goo.gl/K7qVyGUzbHDoA6TB9?g_st=ic',
 };
-const initials = `${wedding.groom[0]} و ${wedding.bride[0]}`;
 const displayDate = new Intl.DateTimeFormat('ar-EG', {
   weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Africa/Cairo',
 }).format(new Date(wedding.date));
@@ -48,26 +48,6 @@ function WeddingCalendar() {
     <p className="calendar-caption"><Heart size={13} aria-hidden="true" /> يوم واحد… وبداية عمر كامل.</p>
   </div>;
 }
-function RingBox({ onOpen }) {
-  const [opening, setOpening] = useState(false);
-  const timer = useRef();
-  useEffect(() => () => clearTimeout(timer.current), []);
-  function open() {
-    if (opening) return;
-    setOpening(true);
-    timer.current = setTimeout(onOpen, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 2400);
-  }
-  return <main className={`cover ${opening ? 'opening' : ''}`}>
-    <TheaterScene interactive /><div className="cover-frame" aria-hidden="true" />
-    <header className="cover-top"><span>{initials}</span><span>٢ ديسمبر ٢٠٢٦</span></header>
-    <div className="cover-copy"><p className="eyebrow">صندوق صغير… وحكاية حب تدوم</p><h1>حكايتنا تبدأ<br />بكلمة <em>نعم.</em></h1><p>وفرحتنا لا تكتمل إلا بوجودكم.</p></div>
-    <button className="box-button" onClick={open} disabled={opening} aria-label="افتح صندوق الخاتم لعرض دعوة الزفاف">
-      <span className="stage-tap-target" />
-    </button>
-    <div className="open-hint"><span className="hint-line" /><p>{opening ? 'بداية جميلة في انتظاركم…' : 'المس الصندوق لتفتح الدعوة'}</p><span className="hint-line" /></div>
-    <footer className="cover-footer"><span>دعوة من القلب، لكم</span><Heart size={14} strokeWidth={1} /><span>بكل الحب</span></footer>
-  </main>;
-}
 function RSVP() {
   const [draft, setDraft] = useState(readDraft);
   const [attendance, setAttendance] = useState(draft?.attendance || 'yes');
@@ -87,8 +67,26 @@ function RSVP() {
 }
 export default function App() {
   const [opened, setOpened] = useState(false);
-  const invitation = useRef(null);
-  useEffect(() => { if (opened) { window.scrollTo(0, 0); invitation.current?.focus(); } }, [opened]);
-  if (!opened) return <RingBox onOpen={() => setOpened(true)} />;
-  return <main className="invitation" ref={invitation} tabIndex={-1}><nav><a href="#home" className="nav-monogram">{initials}</a><div><a href="#details">تفاصيل الفرح</a><a href="#rsvp">تأكيد الحضور <ArrowUpRight size={14} /></a></div></nav><section className="hero" id="home"><TheaterScene /><div className="hero-arch" aria-hidden="true" /><p className="eyebrow">بكل الحب، وبمشاركة عائلتينا</p><p className="script-line">يسعدنا أن ندعوكم لحفل زفافنا</p><h1>{wedding.groom} <em>و</em> {wedding.bride}</h1><p className="eyebrow hero-subtitle">بداية حكايتنا</p><div className="date-line"><span>ديسمبر</span><strong>{wedding.day.toLocaleString('ar-EG')}</strong><span>{wedding.year.toLocaleString('ar-EG', { useGrouping: false })}</span></div><p className="hero-location">الأربعاء، ٢ ديسمبر ٢٠٢٦</p><a href="#details" className="discover">تفاصيل يومنا <ArrowDown size={17} /></a></section><section className="verse-card"><span aria-hidden="true">&#10022;</span><p>وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً</p></section><section className="countdown-section"><p className="eyebrow">كل لحظة تقرّبنا من أجمل يوم</p><h2>نعدّ الأيام <em>حتى نلتقي.</em></h2><Countdown /><WeddingCalendar /></section><section id="details" className="details"><div className="details-heading"><p className="eyebrow">تفاصيل الفرح</p><h2>يوم جميل.<br /><em>وبوجودكم أجمل.</em></h2><p>نحتفل بالحب، ونصنع معكم أجمل الذكريات.</p></div><div className="event-details"><article><CalendarDays size={24} strokeWidth={1} /><div><p className="eyebrow">الموعد</p><h3>{displayDate}</h3><p>من ٧ مساءً حتى ١١ مساءً</p></div></article><article><MapPin size={24} strokeWidth={1} /><div><p className="eyebrow">المكان</p><h3>{wedding.venue || "سنعلن المكان قريبًا"}</h3><p>{wedding.address || "ننتظركم بكل حب"}</p>{wedding.mapsUrl ? <a href={wedding.mapsUrl} target="_blank" rel="noopener noreferrer">افتح الموقع على خرائط جوجل <ArrowUpRight size={14} /></a> : <small>الموقع والاتجاهات قريبًا.</small>}</div></article></div></section><div className="love-note"><span>“</span><p>أجمل ما في حكايتنا<br />أنكم جزء منها.</p><Heart size={22} strokeWidth={1} /></div><RSVP /><footer className="footer"><p>{wedding.groom} <em>و</em> {wedding.bride}</p><span>٢ ديسمبر ٢٠٢٦ · وللعمر بقية معًا</span><button className="text-button" onClick={() => setOpened(false)}>افتح صندوق الحب من جديد <Heart size={13} /></button></footer></main>;
+  const details = useRef(null);
+  const [entranceHeight, setEntranceHeight] = useState(null);
+  function revealDetails() {
+    setEntranceHeight(document.getElementById('home').getBoundingClientRect().height);
+    setOpened(true);
+  }
+  useEffect(() => {
+    if (!opened) return;
+    // Reveal details beneath the same stage, then gently bring the first card into view.
+    const timer = setTimeout(() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      details.current?.scrollIntoView({ behavior: reducedMotion ? 'instant' : 'smooth', block: 'start' });
+      details.current?.focus({ preventScroll: true });
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [opened]);
+  return <main className={`invitation seamless-invitation ${opened ? 'details-visible' : ''}`} style={entranceHeight ? { '--entrance-height': `${entranceHeight}px` } : undefined}>
+    <InvitationEntrance opened={opened} onOpen={revealDetails} groom={wedding.groom} bride={wedding.bride} />
+    <div id="invitation-details" className="invitation-details" hidden={!opened} ref={details} tabIndex={-1}>
+<section className="verse-card"><span aria-hidden="true">&#10022;</span><p>وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً</p></section><section className="countdown-section"><p className="eyebrow">كل لحظة تقرّبنا من أجمل يوم</p><h2>نعدّ الأيام <em>حتى نلتقي.</em></h2><Countdown /><WeddingCalendar /></section><section id="details" className="details"><div className="details-heading"><p className="eyebrow">تفاصيل الفرح</p><h2>يوم جميل.<br /><em>وبوجودكم أجمل.</em></h2><p>نحتفل بالحب، ونصنع معكم أجمل الذكريات.</p></div><div className="event-details"><article><CalendarDays size={24} strokeWidth={1} /><div><p className="eyebrow">الموعد</p><h3>{displayDate}</h3><p>من ٧ مساءً حتى ١١ مساءً</p></div></article><article><MapPin size={24} strokeWidth={1} /><div><p className="eyebrow">المكان</p><h3>{wedding.venue || "سنعلن المكان قريبًا"}</h3><p>{wedding.address || "ننتظركم بكل حب"}</p>{wedding.mapsUrl ? <a href={wedding.mapsUrl} target="_blank" rel="noopener noreferrer">افتح الموقع على خرائط جوجل <ArrowUpRight size={14} /></a> : <small>الموقع والاتجاهات قريبًا.</small>}</div></article></div></section><div className="love-note"><span>“</span><p>أجمل ما في حكايتنا<br />أنكم جزء منها.</p><Heart size={22} strokeWidth={1} /></div><RSVP /><footer className="footer"><p>{wedding.groom} <em>و</em> {wedding.bride}</p><span>٢ ديسمبر ٢٠٢٦ · وللعمر بقية معًا</span><a className="text-button" href="#home">العودة إلى بداية حكايتنا <Heart size={13} /></a></footer>
+    </div>
+  </main>;
 }
