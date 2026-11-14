@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, CalendarDays, Check, Heart, MapPin } from 'lucide-react';
 import './App.css';
-import InvitationEntrance from './components/InvitationEntrance';
+import InvitationEntrance from './components/RoyalEntrance';
+import GoldSprig from './components/GoldSprig';
 import './reference-theme.css';
 import './entrance.css';
-import './box-motion.css';
+import './royal-theme.css';
 
 // Wedding information supplied by the couple.
 const wedding = {
@@ -112,6 +113,7 @@ export default function App() {
   return <main className={`invitation seamless-invitation ${opened ? 'details-visible' : ''}`} style={entranceHeight ? { '--entrance-height': `${entranceHeight}px` } : undefined}>
     <InvitationEntrance opened={opened} onOpen={revealDetails} groom={wedding.groom} bride={wedding.bride} />
     <div id="invitation-details" className="invitation-details" hidden={!opened} ref={details} tabIndex={-1}>
+      <section className="royal-name-card" aria-label="العروسان"><GoldSprig className="sprig-top" /><GoldSprig className="sprig-bottom" /><p className="eyebrow">بكل الحب ندعوكم لمشاركتنا فرحتنا</p><h2>{wedding.groom}<em>و</em>{wedding.bride}</h2><p>حفل زفافنا<br />الأربعاء، ٢ ديسمبر ٢٠٢٦</p></section>
 <section className="verse-card"><span aria-hidden="true">&#10022;</span><p>وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَوَدَّةً وَرَحْمَةً</p></section><section className="countdown-section"><p className="eyebrow">كل لحظة تقرّبنا من أجمل يوم</p><h2>نعدّ الأيام <em>حتى نلتقي.</em></h2><Countdown /><WeddingCalendar /></section><section id="details" className="details"><div className="details-heading"><p className="eyebrow">تفاصيل الفرح</p><h2>يوم جميل.<br /><em>وبوجودكم أجمل.</em></h2><p>نحتفل بالحب، ونصنع معكم أجمل الذكريات.</p></div><div className="event-details"><article><CalendarDays size={24} strokeWidth={1} /><div><p className="eyebrow">الموعد</p><h3>{displayDate}</h3><p>من ٧ مساءً حتى ١١ مساءً</p></div></article><article><MapPin size={24} strokeWidth={1} /><div><p className="eyebrow">المكان</p><h3>{wedding.venue || "سنعلن المكان قريبًا"}</h3><p>{wedding.address || "ننتظركم بكل حب"}</p>{wedding.mapsUrl ? <a href={wedding.mapsUrl} target="_blank" rel="noopener noreferrer">افتح الموقع على خرائط جوجل <ArrowUpRight size={14} /></a> : <small>الموقع والاتجاهات قريبًا.</small>}</div></article></div></section><div className="love-note"><span>“</span><p>أجمل ما في حكايتنا<br />أنكم جزء منها.</p><Heart size={22} strokeWidth={1} /></div><RSVP /><footer className="footer"><p>{wedding.groom} <em>و</em> {wedding.bride}</p><span>٢ ديسمبر ٢٠٢٦ · وللعمر بقية معًا</span><a className="text-button" href="#home">العودة إلى بداية حكايتنا <Heart size={13} /></a></footer>
     </div>
   </main>;
