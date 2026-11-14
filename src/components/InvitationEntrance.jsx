@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, Heart } from 'lucide-react';
 import TheaterScene from './TheaterScene';
+import ArticulatedRingBox from './ArticulatedRingBox';
 
 export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
   const [shimmering, setShimmering] = useState(false);
@@ -30,9 +31,7 @@ export default function InvitationEntrance({ opened, onOpen, groom, bride }) {
       <div className="marble-pedestal" aria-hidden="true"><div className="pedestal-top" /><div className="pedestal-body" /></div>
       <button className="ring-image-button" type="button" onClick={reveal} disabled={shimmering || opened}
         aria-label="دوس على الخاتم لفتح العلبة وإظهار تفاصيل الدعوة" aria-expanded={opened} aria-controls="invitation-details">
-        <img className="real-ring-box open-ring-box" src="/assets/ring-box-real.png" alt="" aria-hidden="true" width="1280" height="1280" fetchPriority="high" />
-        <img className="closed-ring-box closed-box-base" src="/assets/ring-box-closed.png" alt="" aria-hidden="true" width="1280" height="1280" fetchPriority="high" />
-        <img className="closed-ring-box closed-box-lid" src="/assets/ring-box-closed.png" alt="" aria-hidden="true" width="1280" height="1280" />
+        <ArticulatedRingBox />
         <span className="ring-light" aria-hidden="true" />
         <span className="diamond-flare" aria-hidden="true">✦</span>
         <span className="diamond-flare flare-small" aria-hidden="true">✧</span>

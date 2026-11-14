@@ -4,6 +4,7 @@ import './App.css';
 import InvitationEntrance from './components/InvitationEntrance';
 import './reference-theme.css';
 import './entrance.css';
+import './box-motion.css';
 
 // Wedding information supplied by the couple.
 const wedding = {
