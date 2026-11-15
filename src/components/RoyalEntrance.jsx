@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, Heart, Sparkles } from 'lucide-react';
 
-export default function RoyalEntrance({ opened, onOpen, groom, bride }) {
+export default function RoyalEntrance({ opened, onOpen, onStart, groom, bride }) {
   const [opening, setOpening] = useState(false);
   const timer = useRef(null);
   const clicked = useRef(false);
@@ -9,6 +9,7 @@ export default function RoyalEntrance({ opened, onOpen, groom, bride }) {
   function reveal() {
     if (clicked.current || opened) return;
     clicked.current = true;
+    onStart?.();
     setOpening(true);
     timer.current = setTimeout(onOpen, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 4500);
   }
