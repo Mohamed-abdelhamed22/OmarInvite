@@ -10,11 +10,10 @@ export default function RoyalEntrance({ opened, onOpen, groom, bride }) {
     if (clicked.current || opened) return;
     clicked.current = true;
     setOpening(true);
-    timer.current = setTimeout(onOpen, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 3700);
+    timer.current = setTimeout(onOpen, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 4500);
   }
   return <section id="home" className={`cover entrance royal-entrance ${opening ? 'is-opening' : ''} ${opened ? 'is-revealed' : ''}`} aria-label="دعوة لحفل زفاف عمر ومريم">
-    <div className="royal-curtains" aria-hidden="true"><span /><span /></div>
-    <div className="royal-falling-stars" aria-hidden="true">{Array.from({ length: 26 }, (_, i) => <span key={i} style={{ '--x': `${5 + i * 31 % 90}%`, '--drift': `${(i % 2 ? 1 : -1) * (16 + i * 7 % 40)}px`, '--delay': `${(i * 43 % 1150) / 1000}s`, '--size': `${4 + i * 5 % 7}px`, '--duration': `${3.2 + i % 4 * .22}s` }}><svg viewBox="0 0 24 24"><path d="M12 0 15 9 24 12 15 15 12 24 9 15 0 12 9 9Z" fill="currentColor" /></svg></span>)}</div>
+    <div className="royal-curtains" aria-hidden="true"><span className="curtain-top" /><span className="curtain-bottom" /></div>
     <div className="royal-dust" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{'--x':`${12+i*37%77}%`,'--y':`${12+i*19%75}%`,'--delay':`${i*-.63}s`}} />)}</div>
     <div className="cover-frame" aria-hidden="true" />
     <header className="cover-top"><span>دعوة من القلب <Heart size={12} fill="currentColor" /></span><span>٢ ديسمبر ٢٠٢٦</span></header>
