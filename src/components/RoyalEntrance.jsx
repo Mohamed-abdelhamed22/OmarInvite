@@ -14,7 +14,7 @@ export default function RoyalEntrance({ opened, onOpen, onStart, groom, bride })
     timer.current = setTimeout(onOpen, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 4500);
   }
   return <section id="home" className={`cover entrance royal-entrance ${opening ? 'is-opening' : ''} ${opened ? 'is-revealed' : ''}`} aria-label="دعوة لحفل زفاف عمر ومريم">
-    <div className="royal-curtains" aria-hidden="true"><span className="curtain-top" /><span className="curtain-bottom" /></div>
+    <div className="royal-curtains" aria-hidden="true"><span className="curtain-panel curtain-left" /><span className="curtain-panel curtain-right" /></div>
     <div className="royal-dust" aria-hidden="true">{Array.from({length:15},(_,i)=><i key={i} style={{'--x':`${12+i*37%77}%`,'--y':`${12+i*19%75}%`,'--delay':`${i*-.63}s`}} />)}</div>
     <div className="cover-frame" aria-hidden="true" />
     <header className="cover-top"><span>دعوة من القلب <Heart size={12} fill="currentColor" /></span><span>٢ ديسمبر ٢٠٢٦</span></header>
